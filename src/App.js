@@ -2,20 +2,23 @@ import React, { useMemo, useState } from 'react';
 import PostFilter from './components/PostFilter';
 import PostForm from './components/PostForm';
 import PostList from './components/PostList';
-
+import MyButton from './components/UI/button/MyButton';
+import MyModal from './components/UI/MyModal/MyModal';
 
 import './styles/App.css';
 
 function App() {
   const [posts, setPosts] = useState([
-    { id: 2, title: 'php', body: ' yy php - is programming language' },
-    { id: 3, title: 'rubi', body: 'aa rubi - is programming language' },
-    { id: 1, title: 'JavaScript', body: 'pp JavaScript - is programming language' },
+    { id: 1, title: 'php', body: ' yy php - is language' },
+    { id: 2, title: 'rubi', body: 'aa rubi - is language' },
+    { id: 3, title: 'JavaScript', body: 'pp JavaScript - is language' },
   ]);
 
-  // const [selectedSort, setSelectedSort] = useState('');
-  // const [searchQuery, setSearchQuery] = useState('');
-  const [filter, setFilter] = useState({ sort: '', query: '' });
+  const [filter, setFilter] = useState({
+    sort: '',
+    query: '',
+  });
+  const [modal, setModal] = useState(false);
 
   const sortedPosts = useMemo(() => {
     console.log('отработала функция сортед постс');
@@ -26,27 +29,29 @@ function App() {
   }, [filter.sort, posts]);
 
   const sortedAndSearchPosts = useMemo(() => {
-    return sortedPosts.filter((post) => post.title.toLowerCase().includes(filter.query));
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query));
   }, [filter.query, sortedPosts]);
 
-  const createPost = (newPost) => {
+  const createPost = newPost => {
     setPosts([...posts, newPost]);
+    setModal(false);
   };
 
-  const removePost = (post) => {
-    setPosts(posts.filter((p) => p.id !== post.id));
+  const removePost = post => {
+    setPosts(posts.filter(p => p.id !== post.id));
   };
 
   return (
     <div className='App'>
-      <PostForm create={createPost} />
+      <MyButton style={{ marginTop: 30 }} onClick={() => setModal(true)}>
+        Add post
+      </MyButton>
+      <MyModal visible={modal} setVisible={setModal}>
+        <PostForm create={createPost} />
+      </MyModal>
       <hr style={{ margin: '15px 0' }} />
       <PostFilter filter={filter} setFilter={setFilter} />
-      {sortedAndSearchPosts.length ? (
-        <PostList remove={removePost} posts={sortedAndSearchPosts} title='Posts list about JS' />
-      ) : (
-        <h1 style={{ textAlign: 'center' }}>Posts not found!</h1>
-      )}
+      <PostList remove={removePost} posts={sortedAndSearchPosts} title='Posts list about JS' />
     </div>
   );
 }
