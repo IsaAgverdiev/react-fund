@@ -15,7 +15,7 @@ const PostForm = ({create}) => {
   };
 
   return (
-     <from>
+     <form>
         {/* управляемый компонент */}
         <MyInput
           value={post.title}
@@ -30,7 +30,7 @@ const PostForm = ({create}) => {
           placeholder='post description'
         />
         <MyButton onClick={addNewPost}>add post</MyButton>
-      </from>
+      </form>
   )
 }
 

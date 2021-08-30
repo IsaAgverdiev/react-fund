@@ -1,9 +1,6 @@
-import React, { useRef, useState } from 'react';
-import ClassCounter from './components/ClassCounter';
-import Counter from './components/Counter';
+import React, { useMemo, useState } from 'react';
 import PostForm from './components/PostForm';
 import PostList from './components/PostList';
-import MyButton from './components/UI/button/MyButton';
 import MyInput from './components/UI/input/MyInput';
 import MySelect from './components/UI/input/select/MySelect';
 
@@ -17,6 +14,19 @@ function App() {
   ]);
 
   const [selectedSort, setSelectedSort] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const sortedPosts = useMemo(() => {
+    console.log('отработала функция сортед постс');
+    if (selectedSort) {
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+    }
+    return posts;
+  }, [selectedSort, posts]);
+
+  const sortedAndSearchPosts = useMemo(() => {
+    return sortedPosts.filter((post) => post.title.toLowerCase().includes(searchQuery));
+  }, [searchQuery, sortedPosts]);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -28,13 +38,19 @@ function App() {
 
   const sortPosts = (sort) => {
     setSelectedSort(sort);
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])));
   };
 
   return (
     <div className='App'>
       <PostForm create={createPost} />
       <hr style={{ margin: '15px 0' }} />
+
+      <MyInput
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder={'share...'}
+      />
+
       <MySelect
         value={selectedSort}
         onChange={sortPosts}
@@ -45,8 +61,8 @@ function App() {
         ]}
       />
 
-      {posts.length ? (
-        <PostList remove={removePost} posts={posts} title='Posts list about JS' />
+      {sortedAndSearchPosts.length ? (
+        <PostList remove={removePost} posts={sortedAndSearchPosts} title='Posts list about JS' />
       ) : (
         <h1 style={{ textAlign: 'center' }}>Posts not found!</h1>
       )}
