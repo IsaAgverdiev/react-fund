@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
+import { usePosts } from './components/hooks/usePosts';
 import PostFilter from './components/PostFilter';
 import PostForm from './components/PostForm';
 import PostList from './components/PostList';
@@ -8,29 +9,12 @@ import MyModal from './components/UI/MyModal/MyModal';
 import './styles/App.css';
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: 'php', body: ' yy php - is language' },
-    { id: 2, title: 'rubi', body: 'aa rubi - is language' },
-    { id: 3, title: 'JavaScript', body: 'pp JavaScript - is language' },
-  ]);
+  const [posts, setPosts] = useState([]);
 
-  const [filter, setFilter] = useState({
-    sort: '',
-    query: '',
-  });
+  const [filter, setFilter] = useState({ sort: '', query: '' });
   const [modal, setModal] = useState(false);
 
-  const sortedPosts = useMemo(() => {
-    console.log('отработала функция сортед постс');
-    if (filter.sort) {
-      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
-    }
-    return posts;
-  }, [filter.sort, posts]);
-
-  const sortedAndSearchPosts = useMemo(() => {
-    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query));
-  }, [filter.query, sortedPosts]);
+  const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
 
   const createPost = newPost => {
     setPosts([...posts, newPost]);
