@@ -1,39 +1,55 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ClassCounter from './components/ClassCounter';
 import Counter from './components/Counter';
+import PostForm from './components/PostForm';
 import PostList from './components/PostList';
 import MyButton from './components/UI/button/MyButton';
 import MyInput from './components/UI/input/MyInput';
+import MySelect from './components/UI/input/select/MySelect';
 
 import './styles/App.css';
 
 function App() {
   const [posts, setPosts] = useState([
-    { id: 1, title: 'JavaScript', body: 'JavaScript - is programming language' },
-    { id: 2, title: 'JavaScript 2', body: 'JavaScript - is programming language' },
-    { id: 3, title: 'JavaScript 3', body: 'JavaScript - is programming language' },
+    { id: 2, title: 'php', body: ' yy php - is programming language' },
+    { id: 3, title: 'rubi', body: 'aa rubi - is programming language' },
+    { id: 1, title: 'JavaScript', body: 'pp JavaScript - is programming language' },
   ]);
 
-  const [title, setTitle] = useState('');
+  const [selectedSort, setSelectedSort] = useState('');
 
-  const addNewPost = (e) => {
-    e.preventDefault();
-    console.log(title);
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost]);
+  };
+
+  const removePost = (post) => {
+    setPosts(posts.filter((p) => p.id !== post.id));
+  };
+
+  const sortPosts = (sort) => {
+    setSelectedSort(sort);
+    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])));
   };
 
   return (
     <div className='App'>
-      <from>
-        <MyInput
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type='text'
-          placeholder='post title'
-        />
-        <MyInput type='text' placeholder='post description' />
-        <MyButton onClick={addNewPost}>add post</MyButton>
-      </from>
-      <PostList posts={posts} title='Posts list about JS' />
+      <PostForm create={createPost} />
+      <hr style={{ margin: '15px 0' }} />
+      <MySelect
+        value={selectedSort}
+        onChange={sortPosts}
+        defaultValue='sort by'
+        options={[
+          { value: 'title', name: 'name' },
+          { value: 'body', name: 'descr' },
+        ]}
+      />
+
+      {posts.length ? (
+        <PostList remove={removePost} posts={posts} title='Posts list about JS' />
+      ) : (
+        <h1 style={{ textAlign: 'center' }}>Posts not found!</h1>
+      )}
     </div>
   );
 }
