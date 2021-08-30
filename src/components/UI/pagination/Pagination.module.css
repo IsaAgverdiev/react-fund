@@ -1,0 +1,18 @@
+.page__wrap {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  padding: 5px 10px;
+  border: 1px solid teal;
+  color: teal;
+  margin-right: 5px;
+}
+
+.page__current {
+  border: 1px solid teal;
+  color: #fff;
+  background: teal;
+}
