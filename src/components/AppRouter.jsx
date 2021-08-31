@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import { privateRoutes, publicRoutes } from './router/Routes';
+import { AuthContext } from '../context';
+import { privateRoutes, publicRoutes } from '../router/Routes';
 
 const AppRouter = () => {
-  const isAuth = true;
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+  console.log(isAuth);
 
   return isAuth ? (
     <Switch>
