@@ -6,11 +6,47 @@
 
 #root {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App {
   width: 600px;
+}
+
+.navbar {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  background: lightgrey;
+}
+
+.navbar__links {
+  margin-left: auto;
+}
+
+.navbar__links a {
+  text-decoration: none;
+  margin-right: 20px;
+}
+.navbar__links a:hover {
+  color: teal;
+}
+.navbar__links a:last-child {
+  margin-right: 0px;
+}
+
+.navbar__links a:visited {
+  color: inherit;
+}
+.navbar__links a:visited:hover {
+  color: teal;
+}
+
+.title {
+  margin-top: 30px;
 }
 
 .post {
@@ -35,6 +71,10 @@
 .post-exit-active {
   opacity: 0;
   transition: opacity 500ms ease;
+}
+
+.post__btns {
+  display: flex;
 }
 
 .page__wrap {
