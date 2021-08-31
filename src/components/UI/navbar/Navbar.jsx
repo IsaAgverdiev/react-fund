@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { AuthContext } from '../../../context';
+import MyButton from '../button/MyButton';
 
 const Navbar = () => {
-  return (
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const logOut = () => {
+    setIsAuth(false);
+    localStorage.removeItem('auth');
+  };
+  return isAuth ? (
     <div className='navbar'>
       <div className='navbar__links'>
         <Link to='/about' className='navbar__link'>
@@ -12,7 +19,10 @@ const Navbar = () => {
           Posts
         </Link>
       </div>
+      <MyButton onClick={logOut}>Log out</MyButton>
     </div>
+  ) : (
+    <div className='navbar'>Welcome, this login page</div>
   );
 };
 

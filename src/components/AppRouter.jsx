@@ -2,10 +2,14 @@ import React, { useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import { AuthContext } from '../context';
 import { privateRoutes, publicRoutes } from '../router/Routes';
+import Loader from './UI/Loader/Loader';
 
 const AppRouter = () => {
-  const { isAuth, setIsAuth } = useContext(AuthContext);
-  console.log(isAuth);
+  const { isAuth, isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return isAuth ? (
     <Switch>
