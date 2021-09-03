@@ -24,7 +24,7 @@ const PostIdPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className='App'>
       <h1 className='title'>Post page number - {params.id}</h1>
       {isLoading ? (
         <Loader />

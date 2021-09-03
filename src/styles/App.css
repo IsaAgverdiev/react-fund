@@ -11,7 +11,9 @@
 }
 
 .App {
-  width: 600px;
+  max-width: 600px;
+  min-width: 300px;
+  padding: 0 10px;
 }
 
 .navbar {
@@ -46,13 +48,17 @@
   margin-top: 30px;
 }
 
+.selectNum {
+  margin-top: 5px;
+}
+
 .post {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 15px;
   border: 2px solid teal;
   margin-top: 15px;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .post-enter {
@@ -71,7 +77,12 @@
 }
 
 .post__btns {
-  display: flex;
+  margin-top: 10px;
+}
+
+.openBtn {
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .page__wrap {

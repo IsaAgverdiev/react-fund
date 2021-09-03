@@ -67,6 +67,7 @@ function Posts() {
       <hr style={{ margin: '15px 0' }} />
       <PostFilter filter={filter} setFilter={setFilter} />
       <MySelect
+        style={{ marginTop: 5 }}
         value={limit}
         onChange={value => setLimit(value)}
         defaultValue='number items'
@@ -89,9 +90,10 @@ function Posts() {
           },
         ]}
       />
+
       {postError && <h1>Error ${postError}</h1>}
       <PostList remove={removePost} posts={sortedAndSearchPosts} title='Posts list about JS' />
-      <div ref={lastElement} style={{ height: 20, background: 'red' }}></div>
+      <div ref={lastElement} style={{ height: 20, opacity: 0 }}></div>
       {isPostsLoading && (
         <div
           style={{
